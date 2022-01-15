@@ -1,0 +1,224 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8568,        216]
+NotebookOptionsPosition[      7588,        192]
+NotebookOutlinePosition[      7980,        208]
+CellTagsIndexPosition[      7937,        205]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Estimator of the Tail Shape of a Distribution", "Subsection",
+ CellChangeTimes->{{3.8512368616523657`*^9, 3.85123687844672*^9}, {
+  3.851236919518735*^9, 3.851236921239459*^9}, {3.851236971664837*^9, 
+  3.851236984102187*^9}},ExpressionUUID->"dd4aa6aa-2172-4480-8d42-\
+d68261de851b"],
+
+Cell["\<\
+The EstimatedTailShape function estimates the tail shape of a probability \
+distribution.  The function will allow for multiple estimators.  The first \
+implemented algorithm is the Weighted Least Squares estimator of the tail \
+shape as described in the dissertation thesis of Amenah Al-Najafi. 
+\
+\>", "Text",
+ CellChangeTimes->{{3.851236995447369*^9, 3.8512370346179667`*^9}, {
+   3.851237074433407*^9, 3.851237208948711*^9}, 3.8512374928923607`*^9, {
+   3.85123762763415*^9, 
+   3.851237628309207*^9}},ExpressionUUID->"ce0fd04f-6890-48fa-8b4d-\
+770621f03a10"],
+
+Cell[TextData[StyleBox["\[Copyright]  Copyright 2020 Photrek\nGPL v3 license. \
+Proprietary licenses available upon request.\nContributors:  Kenric Nelson \
+and Amenah Al-Najafi",
+ FontSlant->"Italic"]], "Text",
+ CellChangeTimes->{{3.851237497452511*^9, 3.8512374974563017`*^9}, {
+  3.8512375490108023`*^9, 3.851237552168746*^9}, {3.851237588669737*^9, 
+  3.8512376250728693`*^9}},ExpressionUUID->"81a59e21-9896-4803-899e-\
+ed47985275a6"],
+
+Cell["\<\
+References:
+AL-Najafi, Amenah. 2021. \[OpenCurlyDoubleQuote]Estimation of Tail Indices of \
+Heavy-Tailed Distributions with Application Ph.D. Thesis.\
+\[CloseCurlyDoubleQuote] University of Szeged, Bolyai Institute. \
+http://www.math.u-szeged.hu/~czedli/dr-reposit/phdtheses/amenah-al-najafi-d.\
+pdf.\
+\>", "Text",
+ CellChangeTimes->{{3.851237649434104*^9, 
+  3.851237675721006*^9}},ExpressionUUID->"eec6c679-def6-4771-9565-\
+83b67a8d9e8e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"EstimatedTailShape", "[", 
+    RowBox[{"x_", ",", " ", "params_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"EstimatedTailShape", "[", 
+     RowBox[{"x", ",", "params"}], "]"}], "=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "=", 
+         RowBox[{
+         "params", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+        ",", 
+        RowBox[{"b", "=", 
+         RowBox[{
+         "params", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+        ",", "xSorted", ",", "xLength", ",", "s", ",", "j", ",", "nn", ",", 
+        "e", ",", "X", ",", "\[Kappa]"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"xSorted", "=", 
+        RowBox[{"Sort", "[", "x", "]"}]}], ";", " ", 
+       RowBox[{"xLength", "=", 
+        RowBox[{"Length", "[", "x", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"I", "'"}], "d", " ", "prefer", " ", "to", " ", "have", " ", 
+         "a", " ", "name", " ", "for", " ", "the", " ", "variable", " ", 
+         "nn"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"nn", "=", 
+        RowBox[{
+         RowBox[{"Floor", "[", 
+          RowBox[{"b", " ", "xLength"}], "]"}], "-", 
+         RowBox[{"Ceiling", "[", 
+          RowBox[{"a", " ", "xLength"}], "]"}], "+", "1"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"s", "=", 
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           FractionBox[
+            RowBox[{"Ceiling", "[", 
+             RowBox[{"a", " ", "xLength"}], "]"}], "xLength"], "+", 
+           FractionBox[
+            RowBox[{"j", "-", "1"}], "xLength"]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"j", ",", "nn"}], "}"}]}], "\[IndentingNewLine]", "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Use", " ", "the", " ", "Quantile", " ", "function", " ", "to", " ", 
+         "determine", " ", 
+         SubscriptBox["Q", "n"], 
+         RowBox[{"(", "s", ")"}], "\[IndentingNewLine]", "  ", "The", " ", 
+         "distinction", " ", "between", " ", "Qt", " ", "and", " ", "Qn", " ",
+          "is", " ", "not", " ", "clear"}], " ", "*)"}], 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"e", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "0", ",", "0", ",", "0"}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+         "Need", " ", "a", " ", "different", " ", "variable", " ", "name", 
+          " ", "than", " ", "X"}], ",", " ", 
+         RowBox[{
+         "since", " ", "potentially", " ", "confused", " ", "with", " ", 
+          "x"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"X", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", 
+           RowBox[{"Log", "[", "s", "]"}]}], ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{"1", ",", "xLength"}], "]"}], ",", 
+          RowBox[{"2", 
+           RowBox[{"Cos", "[", 
+            RowBox[{"2", "\[Pi]", " ", "s"}], "]"}]}], ",", 
+          RowBox[{"2", " ", 
+           RowBox[{"Cos", "[", 
+            RowBox[{"4", "\[Pi]", " ", "s"}], "]"}]}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"\[Kappa]", "=", 
+        RowBox[{"e", ".", 
+         RowBox[{"Inverse", "[", 
+          RowBox[{"X", ".", "s", ".", "X"}], "]"}], ".", "X", ".", "s", ".", 
+         RowBox[{"Log", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Quantile", "[", 
+             RowBox[{"s", ",", "j"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"j", ",", "nn"}], "}"}]}], "]"}], "]"}]}]}]}]}], 
+     "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.851236928486888*^9, 3.8512369601558847`*^9}, {
+  3.851237685907617*^9, 3.851237687297503*^9}, {3.851238053092025*^9, 
+  3.851238086181814*^9}, {3.8512406201033373`*^9, 3.851240724712101*^9}, {
+  3.851240764671232*^9, 3.851240873600092*^9}, {3.851240967085442*^9, 
+  3.8512410094102697`*^9}, {3.8512414089719048`*^9, 3.851241435895583*^9}, {
+  3.8512414742291107`*^9, 3.851241525971161*^9}, {3.851241557448099*^9, 
+  3.851241814033346*^9}, {3.8512419761790237`*^9, 3.8512420763938828`*^9}, {
+  3.851242146766171*^9, 
+  3.851242222568534*^9}},ExpressionUUID->"de416150-5703-44dc-a24b-\
+79e40ce4c76e"],
+
+Cell[CellGroupData[{
+
+Cell["Test EstimatedTailShape", "Subsubsection",
+ CellChangeTimes->{{3.8512422398973722`*^9, 
+  3.851242250326386*^9}},ExpressionUUID->"290bdb9c-5d3e-48b7-b6a5-\
+85cb5d464b4d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"sample", "=", 
+   RowBox[{"RandomVariate", "[", 
+    RowBox[{
+     RowBox[{"StudentTDistribution", "[", 
+      RowBox[{"0", ",", "1", ",", "1"}], "]"}], ",", "10000"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"EstimatedTailShape", "[", "sample", "]"}]}], "Input",
+ CellChangeTimes->{{3.8512422627351017`*^9, 
+  3.851242312804551*^9}},ExpressionUUID->"52b965c2-8ddc-40f8-94c8-\
+8b468ac10cb7"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 755},
+WindowMargins->{{Automatic, -64}, {0, Automatic}},
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (July 9, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6b5fb43b-ffd1-4a73-a945-9e7877edffaf"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 289, 4, 54, "Subsection",ExpressionUUID->"dd4aa6aa-2172-4480-8d42-d68261de851b"],
+Cell[872, 28, 573, 11, 104, "Text",ExpressionUUID->"ce0fd04f-6890-48fa-8b4d-770621f03a10"],
+Cell[1448, 41, 438, 7, 81, "Text",ExpressionUUID->"81a59e21-9896-4803-899e-ed47985275a6"],
+Cell[1889, 50, 450, 10, 104, "Text",ExpressionUUID->"eec6c679-def6-4771-9565-83b67a8d9e8e"],
+Cell[2342, 62, 4575, 106, 460, "Input",ExpressionUUID->"de416150-5703-44dc-a24b-79e40ce4c76e"],
+Cell[CellGroupData[{
+Cell[6942, 172, 176, 3, 45, "Subsubsection",ExpressionUUID->"290bdb9c-5d3e-48b7-b6a5-85cb5d464b4d"],
+Cell[7121, 177, 439, 11, 52, "Input",ExpressionUUID->"52b965c2-8ddc-40f8-94c8-8b468ac10cb7"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
