@@ -1,0 +1,165 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5272,        157]
+NotebookOptionsPosition[      4615,        136]
+NotebookOutlinePosition[      5097,        155]
+CellTagsIndexPosition[      5054,        152]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Notes on Shalizi Paper", "Subsection",
+ CellChangeTimes->{{3.8885712254028397`*^9, 
+  3.888571237867998*^9}},ExpressionUUID->"cac5d082-410a-4d1a-a3f1-\
+7c2a1b3e843e"],
+
+Cell[TextData[{
+ "Expression for q-exponential distribution\n\nf(x; \[Beta], q) \
+\[Proportional] ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"1", " ", "-", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", "q"}], ")"}], " ", "\[Beta]", " ", "x"}]}], " ", 
+     ")"}], 
+    FractionBox["1", 
+     RowBox[{"1", "-", "q"}]]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "dca9fd8c-ac77-4314-9f59-3d888b21bd55"],
+ "\n\nExpression for coupled exponential distribution\n\nf(x; \[Sigma], \
+\[Kappa]) =  ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["1", "\[Sigma]"], TraditionalForm]],ExpressionUUID->
+  "abcb1060-6e37-4185-aba8-84b16b47dc53"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"1", " ", "+", " ", 
+      RowBox[{"\[Kappa]", " ", 
+       RowBox[{"(", 
+        RowBox[{"x", "/", "\[Sigma]"}], ")"}]}]}], ")"}], 
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{
+       FractionBox["1", "\[Kappa]"], "+", "1"}], ")"}]}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "8ce7aa3d-c880-4251-9b72-59b3b4addc83"],
+ "\n\nq-exponential using Shalizi notation\n\nf(x; \[Sigma]Sh, \[Theta]) = ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["\[Theta]", "\[Sigma]Sh"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "96a1728e-71f9-4a7b-b8cb-65609260f660"],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"1", " ", "+", " ", 
+      FractionBox["x", "\[Sigma]Sh"]}], " ", ")"}], 
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{
+       FractionBox["1", "\[Theta]"], "+", "1"}], ")"}]}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "3bbc51f5-d709-4209-b8bb-47835d7bb190"],
+ "\n\nThus the translations are\n\n\[Theta] = \[Kappa] = ",
+ Cell[BoxData[
+  FractionBox[
+   RowBox[{"-", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", "q"}], ")"}]}], 
+   RowBox[{"2", "-", "q"}]]],
+  CellChangeTimes->{{3.8045221076240463`*^9, 3.804522111841148*^9}, {
+   3.804522278302205*^9, 3.8045223273055553`*^9}, {3.8045223599705276`*^9, 
+   3.804522383758575*^9}},ExpressionUUID->
+  "4cd18e5c-f20c-43d0-a50e-5e73580d695f"],
+ "= ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"q", "-", "1"}], 
+    RowBox[{"2", "-", "q"}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "80a28886-8e86-4f07-904d-654912a56f1e"],
+ "\n\[Sigma]Sh = \[Sigma]D\[Kappa] = ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["\[Sigma]", "\[Kappa]"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "1a70dc06-0495-4d2c-a36b-5916d517d441"],
+ "= ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["1", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"q", "-", "1"}], ")"}], "\[Beta]"}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "ad1de3f8-f7b8-4113-82ac-a90a36842ca7"],
+ " \n"
+}], "Text",
+ CellChangeTimes->{{3.888571242229992*^9, 3.888571377680331*^9}, {
+   3.888571636558546*^9, 3.888571791639801*^9}, {3.888571824007251*^9, 
+   3.888571854164998*^9}, {3.888571890929085*^9, 3.8885720639576197`*^9}, {
+   3.88857214807502*^9, 3.888572152643064*^9}, {3.888572195567382*^9, 
+   3.888572295715128*^9}, {3.888572379961932*^9, 3.888572399132448*^9}, {
+   3.8885727628868837`*^9, 3.888572762887175*^9}, {3.888573126762209*^9, 
+   3.888573135886656*^9}, {3.8885732094033613`*^9, 3.888573209789659*^9}, {
+   3.8885732481444683`*^9, 3.88857326794776*^9}, {3.888573301940692*^9, 
+   3.8885733357017813`*^9}, {3.8885746262578497`*^9, 3.888574635059314*^9}, 
+   3.8885755450948267`*^9, {3.888575686285863*^9, 
+   3.8885757269271708`*^9}},ExpressionUUID->"1ddb0e0e-c13c-43eb-a4af-\
+3b13b0520731"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.888571658656871*^9, 
+  3.888571659629953*^9}},ExpressionUUID->"a573d797-43f5-4847-a5e9-\
+85cd94ff9a70"]
+}, Open  ]]
+},
+WindowSize->{808, 747},
+WindowMargins->{{Automatic, -881}, {27, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"13.0 for Mac OS X x86 (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"e59e639f-3684-4826-853f-c50d3f01c848"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 172, 3, 81, "Subsection",ExpressionUUID->"cac5d082-410a-4d1a-a3f1-7c2a1b3e843e"],
+Cell[755, 27, 3689, 101, 666, "Text",ExpressionUUID->"1ddb0e0e-c13c-43eb-a4af-3b13b0520731"],
+Cell[4447, 130, 152, 3, 46, "Input",ExpressionUUID->"a573d797-43f5-4847-a5e9-85cd94ff9a70"]
+}, Open  ]]
+}
+]
+*)
+
