@@ -40,8 +40,10 @@ ML= stats.genpareto.fit(Data, loc=0)
 data_ML= coupled_exponential(N, ML[0], mu, ML[2])
 
 
-def average_least_absolute_deviation(data, data_ML):
-    absolute_deviations = np.abs(data - data_ML)
+def average_least_absolute_deviation(data, Data_estimator):
+    sorted_data = np.sort(data)
+    sorted_Data_estimator = np.sort(Data_estimator)
+    absolute_deviations = np.abs(sorted_data - sorted_Data_estimator)
     avg_lad = np.mean(absolute_deviations)
     return avg_lad
 
