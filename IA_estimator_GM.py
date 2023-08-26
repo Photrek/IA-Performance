@@ -32,7 +32,7 @@ N=len(Data)
 
 
 # Calculate the ML parameters
-ML= stats.genpareto.fit(Data, loc=0)
+ML= stats.genpareto.fit(Data, loc=0, scale=0)
 
 data_ML_gene= genpareto.rvs(ML[0], loc=loc, scale=ML[2], size=N)
 N_1=len(data_ML_gene)
